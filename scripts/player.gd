@@ -7,6 +7,11 @@ const RUN_SPEED = 450.0
 const JUMP_VELOCITY = -400.0
 const LONG_JUMP_VELOCITY = -480.0
 
+# Constantes de empurrão simples
+const PUSH_FORCE = 300.0
+const PUSH_MULTIPLIER_RUNNING = 4.0
+const PUSH_DAMPING = 0.85
+
 # Mecânicas avançadas
 const COYOTE_TIME = 0.1
 const JUMP_BUFFER_TIME = 0.1
@@ -16,6 +21,9 @@ var is_running = false
 var coyote_timer = 0.0
 var jump_buffer_timer = 0.0
 var was_on_floor = false
+
+# Variável de empurrão simples
+var push_velocity = Vector2.ZERO
 
 # MULTIPLAYER - Variáveis de rede
 @export var player_id: int = 1
@@ -40,6 +48,7 @@ func _ready():
 	# Só ativa a câmera para o player local
 	if has_node("Camera2D"):
 		$Camera2D.enabled = (player_id == multiplayer.get_unique_id())
+		$Camera2D.offset = Vector2.ZERO  # Reset da posição da câmera
 	
 	print("Player criado! ID:", player_id, " Nome:", player_name, " | É meu:", is_multiplayer_authority())
 
@@ -50,6 +59,12 @@ func _physics_process(delta):
 		handle_gravity(delta)
 		handle_jump()
 		handle_movement()
+		
+		# Aplica empurrão
+		apply_push_velocity(delta)
+		
+		# Detecta colisões simples
+		handle_simple_collisions()
 		
 		move_and_slide()
 		
@@ -62,7 +77,55 @@ func _physics_process(delta):
 	# Atualiza estado do chão
 	was_on_floor = is_on_floor()
 
-# RPC para sincronizar movimento (chamado pelo dono)
+# Função simples de colisão
+func handle_simple_collisions():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider is Player and collider != self:
+			var other_player = collider as Player
+			
+			# Calcula direção do empurrão
+			var push_direction = (other_player.global_position - global_position).normalized()
+			
+			# Calcula força baseada na velocidade e se está correndo
+			var my_speed = velocity.length()
+			var force = PUSH_FORCE
+			
+			if is_running:
+				force *= PUSH_MULTIPLIER_RUNNING
+			
+			# Só empurra se há velocidade suficiente
+			if my_speed > 50:
+				# Envia empurrão para o outro player
+				other_player.receive_push.rpc(push_direction, force)
+				print(player_name, " empurrou ", other_player.player_name, " | Força: ", force)
+
+# RPC para receber empurrão
+@rpc("any_peer", "reliable")
+func receive_push(direction: Vector2, force: float):
+	if is_multiplayer_authority():
+		# Aplica empurrão horizontal
+		push_velocity.x += direction.x * force
+		
+		# Pequeno impulso vertical se estiver no chão
+		if is_on_floor() and abs(direction.x) > 0.5:
+			push_velocity.y = -80
+
+# Aplica velocidade de empurrão
+func apply_push_velocity(delta):
+	# Adiciona empurrão à velocidade
+	velocity += push_velocity * delta
+	
+	# Reduz empurrão gradualmente
+	push_velocity = push_velocity * PUSH_DAMPING
+	
+	# Para quando fica muito pequeno
+	if push_velocity.length() < 5:
+		push_velocity = Vector2.ZERO
+
+# RPC para sincronizar movimento
 @rpc("any_peer", "unreliable")
 func sync_movement(net_pos: Vector2, net_vel: Vector2, net_running: bool):
 	if not is_multiplayer_authority():
