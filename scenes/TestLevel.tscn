@@ -1,14 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://cm2qshrq2rmyg"]
 
-[ext_resource type="PackedScene" uid="uid://xb70nl81804" path="res://scenes/player.tscn" id="1_dojpo"]
+[ext_resource type="Script" uid="uid://cb6uuk6xfblty" path="res://scripts/testLevel.gd" id="1_dojpo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpmp"]
 size = Vector2(1142, 20)
 
 [node name="TestLevel" type="Node2D"]
+script = ExtResource("1_dojpo")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(14, 632)
+position = Vector2(12, 212)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(561, 0)
@@ -22,7 +23,7 @@ offset_bottom = 10.0
 metadata/_edit_use_anchors_ = true
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(1156, 556)
+position = Vector2(1154, 136)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
 position = Vector2(561, 0)
@@ -36,7 +37,7 @@ offset_bottom = 10.0
 metadata/_edit_use_anchors_ = true
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2(1156, 556)
+position = Vector2(1154, 136)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 position = Vector2(1721, 66)
@@ -48,6 +49,3 @@ offset_top = 56.0
 offset_right = 2292.0
 offset_bottom = 76.0
 metadata/_edit_use_anchors_ = true
-
-[node name="Player" parent="." instance=ExtResource("1_dojpo")]
-position = Vector2(196, 524)
