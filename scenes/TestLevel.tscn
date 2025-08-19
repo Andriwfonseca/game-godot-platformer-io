@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm2qshrq2rmyg"]
+
+[ext_resource type="PackedScene" uid="uid://xb70nl81804" path="res://scenes/player.tscn" id="1_dojpo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpmp"]
+size = Vector2(1142, 20)
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(14, 632)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(561, 0)
+shape = SubResource("RectangleShape2D_1fpmp")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 1132.0
+offset_bottom = 10.0
+metadata/_edit_use_anchors_ = true
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(1156, 556)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(561, 0)
+shape = SubResource("RectangleShape2D_1fpmp")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D2"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 1132.0
+offset_bottom = 10.0
+metadata/_edit_use_anchors_ = true
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(1156, 556)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(1721, 66)
+shape = SubResource("RectangleShape2D_1fpmp")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D3"]
+offset_left = 1150.0
+offset_top = 56.0
+offset_right = 2292.0
+offset_bottom = 76.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Player" parent="." instance=ExtResource("1_dojpo")]
+position = Vector2(196, 524)
