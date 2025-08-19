@@ -18,17 +18,8 @@ offset_bottom = 306.0
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Multiplayer Test"
+text = "Meu Jogo Multiplayer"
 
-[node name="HostButton" type="Button" parent="VBoxContainer"]
+[node name="StartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Criar Servidor"
-
-[node name="JoinButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Entrar no Servidor"
-
-[node name="IPLineEdit" type="LineEdit" parent="VBoxContainer"]
-layout_mode = 2
-text = "127.0.0.1"
-placeholder_text = "127.0.0.1"
+text = "Iniciar Jogo"

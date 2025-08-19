@@ -49,3 +49,36 @@ offset_top = 56.0
 offset_right = 2292.0
 offset_bottom = 76.0
 metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(2869, -18)
+shape = SubResource("RectangleShape2D_1fpmp")
+
+[node name="ColorRect2" type="ColorRect" parent="StaticBody2D3"]
+offset_left = 2298.0
+offset_top = -28.0
+offset_right = 3440.0
+offset_bottom = -8.0
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(3725, -104)
+shape = SubResource("RectangleShape2D_1fpmp")
+
+[node name="ColorRect3" type="ColorRect" parent="StaticBody2D3"]
+offset_left = 3154.0
+offset_top = -114.0
+offset_right = 4296.0
+offset_bottom = -94.0
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(3987, -196)
+shape = SubResource("RectangleShape2D_1fpmp")
+
+[node name="ColorRect4" type="ColorRect" parent="StaticBody2D3"]
+offset_left = 3416.0
+offset_top = -206.0
+offset_right = 4558.0
+offset_bottom = -186.0
+metadata/_edit_use_anchors_ = true
